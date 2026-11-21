@@ -1,4 +1,4 @@
-import type { RespuestaError, RespuestaExito } from '@barberly/compartido';
+import type { RespuestaError, RespuestaExito } from './contrato';
 
 const URL_API = process.env.EXPO_PUBLIC_URL_API;
 

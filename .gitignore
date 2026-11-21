@@ -41,3 +41,17 @@ example
 # generated native folders
 /ios
 /android
+
+# Variables de entorno y secretos (solo se versiona el .example)
+.env
+.env.*
+!.env.example
+
+# Credenciales de firma
+*.keystore
+
+# Pruebas
+coverage/
+
+# Configuracion local de Claude Code
+.claude/settings.local.json

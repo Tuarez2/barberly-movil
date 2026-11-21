@@ -1,7 +1,9 @@
 import expo from 'eslint-config-expo/flat.js';
 import prettier from 'eslint-config-prettier';
 
-import { ignorados } from '../../eslint.config.mjs';
+const ignorados = {
+  ignores: ['**/node_modules/', '**/dist/', '**/.expo/', '**/coverage/', 'android/', 'ios/'],
+};
 
 export default [
   ignorados,
