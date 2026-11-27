@@ -93,9 +93,9 @@ export function renovarSesion(): Promise<boolean> {
   return renovacionEnCurso;
 }
 
-export async function pedir<T>(
+async function enviarRenovando<T>(
   ruta: string,
-  opciones: OpcionesPedido = {},
+  opciones: OpcionesPedido,
 ): Promise<RespuestaExito<T>> {
   try {
     return await enviar<T>(ruta, opciones);
@@ -104,5 +104,23 @@ export async function pedir<T>(
     if (!opciones.autenticado || !vencido) throw error;
     if (!(await renovarSesion())) throw error;
     return enviar<T>(ruta, opciones);
+  }
+}
+
+export async function pedir<T>(
+  ruta: string,
+  opciones: OpcionesPedido = {},
+): Promise<RespuestaExito<T>> {
+  try {
+    return await enviarRenovando<T>(ruta, opciones);
+  } catch (error) {
+    // D-05: solo AUTENTICACION_REQUERIDA en una solicitud autenticada borra la sesión local
+    // (p. ej., usuario desactivado), también tras el reintento; la red o un 500 no la borran.
+    const rechazada = error instanceof ErrorApi && error.codigo === 'AUTENTICACION_REQUERIDA';
+    if (opciones.autenticado && rechazada) {
+      await almacenSesion.limpiar();
+      alSesionInvalida?.();
+    }
+    throw error;
   }
 }

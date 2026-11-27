@@ -94,6 +94,75 @@ describe('T1.10: cliente HTTP con sesión', () => {
     escucharSesionInvalida(undefined);
   });
 
+  describe('D-05: solo AUTENTICACION_REQUERIDA borra la sesión local', () => {
+    const rechazo = { error: { codigo: 'AUTENTICACION_REQUERIDA', mensaje: '' } };
+    const alInvalida = jest.fn();
+
+    beforeEach(() => {
+      alInvalida.mockReset();
+      escucharSesionInvalida(alInvalida);
+    });
+    afterEach(() => escucharSesionInvalida(undefined));
+
+    it('en una solicitud autenticada borra la sesión y avisa', async () => {
+      fetchSimulado.mockReturnValueOnce(respuesta(401, rechazo));
+
+      await expect(pedir('/usuarios/yo', { autenticado: true })).rejects.toMatchObject({
+        codigo: 'AUTENTICACION_REQUERIDA',
+      });
+      expect(alInvalida).toHaveBeenCalledTimes(1);
+      expect(almacenSesion.tokenAcceso()).toBeNull();
+      expect(await almacenSesion.tokenRenovacion()).toBeNull();
+    });
+
+    it('si el reintento tras una renovación exitosa la recibe, también la borra', async () => {
+      fetchSimulado
+        .mockReturnValueOnce(respuesta(401, vencido))
+        .mockReturnValueOnce(
+          respuesta(200, {
+            datos: { tokenAcceso: 'acceso-nuevo', tokenRenovacion: 'renovacion-2' },
+          }),
+        )
+        .mockReturnValueOnce(respuesta(401, rechazo));
+
+      await expect(pedir('/usuarios/yo', { autenticado: true })).rejects.toMatchObject({
+        codigo: 'AUTENTICACION_REQUERIDA',
+      });
+      expect(fetchSimulado).toHaveBeenCalledTimes(3);
+      expect(alInvalida).toHaveBeenCalledTimes(1);
+      expect(await almacenSesion.tokenRenovacion()).toBeNull();
+    });
+
+    it('en una solicitud pública (sin token) no la borra', async () => {
+      fetchSimulado.mockReturnValueOnce(respuesta(401, rechazo));
+
+      await expect(pedir('/autenticacion/registro', { metodo: 'POST' })).rejects.toMatchObject({
+        codigo: 'AUTENTICACION_REQUERIDA',
+      });
+      expect(fetchSimulado.mock.calls[0][1].headers.Authorization).toBeUndefined();
+      expect(alInvalida).not.toHaveBeenCalled();
+      expect(await almacenSesion.tokenRenovacion()).toBe('renovacion-1');
+    });
+
+    it.each([
+      [
+        'CREDENCIALES_INVALIDAS',
+        () => respuesta(401, { error: { codigo: 'CREDENCIALES_INVALIDAS', mensaje: '' } }),
+      ],
+      ['SIN_CONEXION', () => Promise.reject(new TypeError('Network request failed'))],
+      ['INTERNO', () => respuesta(500, { error: { codigo: 'INTERNO', mensaje: '' } })],
+    ])('%s no la borra', async (codigo, simular) => {
+      fetchSimulado.mockImplementationOnce(simular);
+
+      await expect(
+        pedir('/usuarios/yo/clave', { metodo: 'PATCH', autenticado: true }),
+      ).rejects.toMatchObject({ codigo });
+      expect(alInvalida).not.toHaveBeenCalled();
+      expect(almacenSesion.tokenAcceso()).toBe('acceso-viejo');
+      expect(await almacenSesion.tokenRenovacion()).toBe('renovacion-1');
+    });
+  });
+
   it('sin red responde SIN_CONEXION', async () => {
     fetchSimulado.mockRejectedValueOnce(new TypeError('Network request failed'));
 
