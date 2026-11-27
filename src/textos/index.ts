@@ -54,7 +54,17 @@ export const textos = {
     rol: { PROPIETARIO: 'Propietario', BARBERO: 'Barbero' },
     editar: 'Editar perfil',
     cambiarClave: 'Cambiar contraseña',
+    cambiarRol: 'Cambiar de barbería o rol',
     cerrarSesion: 'Cerrar sesión',
+  },
+  cambiarRol: {
+    titulo: 'Cambiar de barbería o rol',
+    subtitulo: 'Elige con qué barbería trabajas ahora o usa la app como cliente.',
+    comoBarbero: 'Barbero',
+    cliente: 'Cliente',
+    clienteDescripcion: 'Reserva y gestiona tus propias citas',
+    activa: 'Activa',
+    etiquetaOpcion: (nombre: string, rol: string) => `${nombre}, ${rol}`,
   },
   editarPerfil: {
     titulo: 'Editar perfil',

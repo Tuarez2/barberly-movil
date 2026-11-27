@@ -2,6 +2,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 
 import type { PerfilUsuario } from '@/api/contrato';
+import { ELECCION_CLIENTE, type MembresiaActiva, resolverActiva } from '@/sesion/barberia-activa';
 
 import LayoutBarbero from '../app/(barbero)/_layout';
 import Explorar from '../app/(cliente)/explorar';
@@ -13,6 +14,7 @@ const mockSesion = {
   estado: 'con-sesion',
   perfil: undefined as PerfilUsuario | undefined,
   errorPerfil: null as unknown,
+  activa: undefined as MembresiaActiva | undefined,
   salir: jest.fn(async () => undefined),
   reintentar: jest.fn(),
 };
@@ -49,10 +51,17 @@ function perfilCon(roles: ('PROPIETARIO' | 'BARBERO')[]): PerfilUsuario {
   };
 }
 
+// Sin elección guardada (AUT-09): se resuelve como al entrar por primera vez.
+function conPerfil(perfil: PerfilUsuario) {
+  mockSesion.perfil = perfil;
+  mockSesion.activa = resolverActiva(perfil, null);
+}
+
 describe('T1.12: entrada según el rol', () => {
   beforeEach(() => {
     mockSesion.estado = 'con-sesion';
     mockSesion.perfil = undefined;
+    mockSesion.activa = undefined;
     mockSesion.errorPerfil = null;
     jest.clearAllMocks();
   });
@@ -64,19 +73,19 @@ describe('T1.12: entrada según el rol', () => {
   });
 
   it('un cliente entra a Explorar', async () => {
-    mockSesion.perfil = perfilCon([]);
+    conPerfil(perfilCon([]));
     await render(<Inicio />);
     expect(screen.getByText('redirige a /explorar')).toBeTruthy();
   });
 
   it('un barbero entra a su día', async () => {
-    mockSesion.perfil = perfilCon(['BARBERO']);
+    conPerfil(perfilCon(['BARBERO']));
     await render(<Inicio />);
     expect(screen.getByText('redirige a /hoy')).toBeTruthy();
   });
 
   it('D-10: un propietario entra como cliente y ve el aviso del panel web', async () => {
-    mockSesion.perfil = perfilCon(['PROPIETARIO']);
+    conPerfil(perfilCon(['PROPIETARIO']));
     await render(<Inicio />);
     expect(screen.getByText('redirige a /explorar')).toBeTruthy();
 
@@ -92,7 +101,20 @@ describe('T1.12: entrada según el rol', () => {
   });
 
   it('SEG-03: quien no es barbero no entra a las rutas del barbero', async () => {
-    mockSesion.perfil = perfilCon(['PROPIETARIO']);
+    conPerfil(perfilCon(['PROPIETARIO']));
+    await render(<LayoutBarbero />);
+    expect(screen.getByText('redirige a /explorar')).toBeTruthy();
+  });
+
+  it('AUT-09: un barbero con su membresía elegida entra a sus rutas', async () => {
+    conPerfil(perfilCon(['BARBERO']));
+    await render(<LayoutBarbero />);
+    expect(screen.getByText('pila')).toBeTruthy();
+  });
+
+  it('AUT-09: un barbero que eligió el rol cliente va de /hoy a Explorar', async () => {
+    mockSesion.perfil = perfilCon(['BARBERO']);
+    mockSesion.activa = resolverActiva(mockSesion.perfil, ELECCION_CLIENTE);
     await render(<LayoutBarbero />);
     expect(screen.getByText('redirige a /explorar')).toBeTruthy();
   });
