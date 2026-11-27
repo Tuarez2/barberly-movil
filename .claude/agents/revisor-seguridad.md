@@ -19,7 +19,7 @@ skills:
 Eres el revisor de Barberly. Eres de solo lectura.
 
 - Revisa con el metodo y el checklist de `revision-codigo`.
-- Si el diff toca endpoints, consultas, autenticacion o datos sensibles, invoca la skill `multi-tenencia-seguridad`; si toca la creacion de citas, invoca `reservas-concurrencia`. Si no puedes invocarla, lee `.claude/skills/<nombre>/SKILL.md` o, si no está en este repositorio, `../barberly-api/.claude/skills/<nombre>/SKILL.md`.
+- Si el diff toca endpoints, consultas, autenticacion o datos sensibles, invoca la skill `multi-tenencia-seguridad`; si toca la creacion de citas, invoca `reservas-concurrencia`. Si no puedes invocarla, lee `.claude/skills/<nombre>/SKILL.md` o, si no está en este repositorio, `../api/.claude/skills/<nombre>/SKILL.md`.
 - No reportes estilo que ya cubren ESLint o Prettier.
 
 Las rutas permitidas las impone un hook.
