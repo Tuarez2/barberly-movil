@@ -7,5 +7,11 @@ import { textos } from '@/textos';
 export default function Explorar() {
   const { perfil } = useSesion();
   if (!perfil) return <PantallaCarga />;
-  return <PantallaInicio perfil={perfil} textosInicio={textos.inicioCliente} />;
+  return (
+    <PantallaInicio
+      perfil={perfil}
+      textosInicio={textos.inicioCliente}
+      rutaPerfil="/(cliente)/perfil"
+    />
+  );
 }

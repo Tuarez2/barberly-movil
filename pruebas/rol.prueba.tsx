@@ -27,6 +27,7 @@ jest.mock('expo-router', () => {
     Redirect: ({ href }: { href: string }) => <TextoMock>{`redirige a ${href}`}</TextoMock>,
     Stack: () => <TextoMock>pila</TextoMock>,
     useRouter: () => ({ push: jest.fn(), replace: jest.fn(), back: jest.fn() }),
+    useSegments: () => ['(cliente)', 'perfil'],
   };
 });
 
