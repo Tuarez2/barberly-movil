@@ -1,7 +1,8 @@
 // HU-AUT-02 (AUT-02, D-16). Estados: credenciales inválidas (13:581) y demasiados intentos (13:609).
+// Tras restablecer la contraseña (AUT-07, D-01) llega con el correo y el aviso de clave cambiada.
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
@@ -21,14 +22,15 @@ type Formulario = z.input<typeof esquemaFormulario>;
 
 export default function IniciarSesion() {
   const router = useRouter();
+  const parametros = useLocalSearchParams<{ correo?: string; aviso?: string }>();
   const { entrar } = useSesion();
-  const { control, handleSubmit, setError } = useForm<
+  const { control, handleSubmit, setError, getValues } = useForm<
     Formulario,
     unknown,
     z.output<typeof esquemaFormulario>
   >({
     resolver: zodResolver(esquemaFormulario),
-    defaultValues: { correo: '', clave: '' },
+    defaultValues: { correo: parametros.correo ?? '', clave: '' },
   });
 
   const mutacion = useMutation({
@@ -55,6 +57,13 @@ export default function IniciarSesion() {
       subtitulo={textos.inicioSesion.subtitulo}
     >
       {errorGeneral ? <Aviso mensaje={errorGeneral} testID="aviso-inicio-sesion" /> : null}
+      {!errorGeneral && parametros.aviso === 'clave-cambiada' ? (
+        <Aviso
+          tipo="informacion"
+          mensaje={textos.inicioSesion.claveCambiada}
+          testID="aviso-clave-cambiada"
+        />
+      ) : null}
       <Controller
         control={control}
         name="correo"
@@ -96,6 +105,14 @@ export default function IniciarSesion() {
         cargando={mutacion.isPending}
         alPresionar={handleSubmit((datos) => mutacion.mutate(datos))}
         testID="boton-iniciar-sesion"
+      />
+      <Boton
+        etiqueta={textos.inicioSesion.olvideClave}
+        tipo="texto"
+        alPresionar={() =>
+          router.push({ pathname: '/recuperar-clave', params: { correo: getValues('correo') } })
+        }
+        testID="boton-olvide-clave"
       />
       <Boton
         etiqueta={textos.inicioSesion.sinCuenta}

@@ -12,6 +12,27 @@ export const textos = {
     clave: 'Contraseña',
     entrar: 'Iniciar sesión',
     sinCuenta: '¿No tienes cuenta? Crear cuenta',
+    olvideClave: '¿Olvidaste tu contraseña?',
+    claveCambiada: 'Contraseña cambiada, inicia sesión',
+  },
+  recuperarClave: {
+    titulo: 'Recupera tu contraseña',
+    subtitulo: 'Escribe el correo de tu cuenta y te enviaremos un código de 6 dígitos.',
+    correo: 'Correo',
+    enviar: 'Enviar código',
+  },
+  restablecerClave: {
+    titulo: 'Crea una contraseña nueva',
+    subtitulo: (correo: string) => `Escribe el código que enviamos a ${correo}.`,
+    // AUT-07: el mismo texto exista o no el correo (respuesta 202).
+    codigoEnviado:
+      'Si el correo está registrado, te enviamos un código de 6 dígitos para restablecer tu contraseña.',
+    codigo: 'Código',
+    ayudaCodigo: 'Vence en 15 minutos.',
+    claveNueva: 'Contraseña nueva',
+    ayudaClave: 'Mínimo 8 caracteres, con al menos una letra y un número.',
+    guardar: 'Cambiar contraseña',
+    pedirOtro: 'Pedir otro código',
   },
   registro: {
     titulo: 'Crea tu cuenta',
