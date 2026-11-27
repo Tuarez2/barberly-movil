@@ -6,7 +6,7 @@ Fuente de verdad: `../api/docs/DERCAS.md` + `../api/docs/decisiones.md` (D-11); 
 
 ## Repositorios (D-11)
 
-Los tres se clonan en la carpeta de trabajo `Barberly/` como `api/` (API y `docs/`), `movil/` (este) y `panel/`. El orquestador multi-repositorio vive en `Barberly/CLAUDE.md` (D-27). La documentación se lee en `../api/docs/` y no se copia aquí.
+Los tres se clonan en la carpeta de trabajo `Barberly/` como `api/` (`barberly-api`, con `docs/`), `frontend/` (`barberly-movil`, este) y `web/` (`barberly-panel`). El orquestador multi-repositorio vive en `Barberly/CLAUDE.md` (D-27). La documentación se lee en `../api/docs/` y no se copia aquí.
 `src/api/contrato.ts` es una copia del contrato de la API (`src/compartido/contrato.ts` en `barberly-api`); la referencia es `GET /api/v1/documentacion`.
 
 ## Stack (fijo: no cambies de librería sin preguntar)
@@ -35,9 +35,10 @@ Los tres se clonan en la carpeta de trabajo `Barberly/` como `api/` (API y `docs
 ## Tareas y Git
 
 - Las tareas están en `../api/docs/hoja-de-ruta.md`; si no está, primero se agrega allí.
-- El usuario crea las ramas y hace commit, merge y PR. Claude hace push de la rama actual cuando el usuario lo indica.
-- Nunca push a `main` ni con `--force`: `main` solo recibe código por PR con CI verde.
-- Los especialistas no crean ramas ni hacen commit o push.
+- Git es automático (D-29): Claude crea la rama de la funcionalidad y la de cada tarea, hace el commit de cada tarea cuando `verificar.sh` está en verde y `revisor-seguridad` no tiene Bloqueantes, la une a su funcionalidad con `--no-ff`, publica la rama y abre el PR con `gh pr create`.
+- El usuario aprueba el plan, prueba en el teléfono, revisa el PR y lo fusiona en GitHub con el CI en verde. Claude nunca fusiona un PR.
+- Nunca commit ni merge en `main`, nunca push a `main` ni con `--force`: lo bloquea el hook `proteger`.
+- Los especialistas no crean ramas ni hacen commit o push: lo hace el orquestador.
 
 ## Comandos
 
