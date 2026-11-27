@@ -1,6 +1,7 @@
-// Perfil (nodos 11:579 y 16:1052): datos, barberías, editar, cambiar contraseña y cerrar sesión
-// (AUT-03, AUT-05, AUT-06, AUT-08). El barbero reutiliza esta pantalla en (barbero)/perfil (§10.5);
-// su foto (PUT y DELETE /barberias/:id/barberos/:barberoId/foto) llega con su propia tarea.
+// Perfil (nodos 11:579 y 16:1052): datos, barberías, editar, cambiar contraseña, cambiar de
+// barbería o rol si es barbero (AUT-09) y cerrar sesión (AUT-03, AUT-05, AUT-06, AUT-08).
+// El barbero reutiliza esta pantalla en (barbero)/perfil (§10.5); su foto
+// (PUT y DELETE /barberias/:id/barberos/:barberoId/foto) llega con su propia tarea.
 import { useMutation } from '@tanstack/react-query';
 import { useRouter, useSegments } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -10,14 +11,23 @@ import { Boton } from '@/componentes/boton';
 import { CorteDiagonal } from '@/componentes/corte-diagonal';
 import { Entrada } from '@/componentes/entrada';
 import { PantallaCarga } from '@/componentes/pantalla-carga';
+import { ofreceCambio } from '@/sesion/barberia-activa';
 import { useSesion } from '@/sesion/proveedor-sesion';
 import { textos } from '@/textos';
 import { espacios, radios, tipografia, useTema } from '@/tema';
 
 // Una ruta repetida entre grupos se enlaza con su grupo (docs/pantallas.md).
 const RUTAS = {
-  '(cliente)': { editar: '/(cliente)/perfil/editar', clave: '/(cliente)/perfil/clave' },
-  '(barbero)': { editar: '/(barbero)/perfil/editar', clave: '/(barbero)/perfil/clave' },
+  '(cliente)': {
+    editar: '/(cliente)/perfil/editar',
+    clave: '/(cliente)/perfil/clave',
+    cambiarRol: '/(cliente)/perfil/cambiar-rol',
+  },
+  '(barbero)': {
+    editar: '/(barbero)/perfil/editar',
+    clave: '/(barbero)/perfil/clave',
+    cambiarRol: '/(barbero)/perfil/cambiar-rol',
+  },
 } as const;
 
 export default function Perfil() {
@@ -107,6 +117,14 @@ export default function Perfil() {
             alPresionar={() => router.push(rutas.clave)}
             testID="boton-abrir-cambiar-clave"
           />
+          {ofreceCambio(perfil) ? (
+            <Boton
+              etiqueta={textos.perfil.cambiarRol}
+              tipo="secundario"
+              alPresionar={() => router.push(rutas.cambiarRol)}
+              testID="boton-abrir-cambiar-rol"
+            />
+          ) : null}
         </View>
       </Entrada>
       <Entrada indice={5}>

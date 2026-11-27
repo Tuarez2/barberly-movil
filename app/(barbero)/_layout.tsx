@@ -2,14 +2,14 @@ import { Redirect, Stack } from 'expo-router';
 
 import { PantallaCarga } from '@/componentes/pantalla-carga';
 import { useSesion } from '@/sesion/proveedor-sesion';
-import { esBarbero } from '@/sesion/rol';
 
-// Solo para quien tiene una membresía BARBERO activa (AUT-08, SEG-03).
+// Solo con una membresía BARBERO activa y elegida (AUT-08, AUT-09, SEG-03): quien no es barbero
+// o eligió el rol cliente va a Explorar.
 export default function LayoutBarbero() {
-  const { estado, perfil } = useSesion();
+  const { estado, perfil, activa } = useSesion();
   if (estado === 'cargando') return <PantallaCarga />;
   if (estado !== 'con-sesion') return <Redirect href="/bienvenida" />;
-  if (!perfil) return <PantallaCarga />;
-  if (!esBarbero(perfil)) return <Redirect href="/explorar" />;
+  if (!perfil || activa === undefined) return <PantallaCarga />;
+  if (!activa) return <Redirect href="/explorar" />;
   return <Stack screenOptions={{ headerShown: false }} />;
 }
