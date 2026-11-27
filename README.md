@@ -4,7 +4,7 @@ App de Barberly para clientes y barberos, hecha con Expo. El propietario adminis
 
 Barberly tiene tres repositorios (D-11) que se clonan en la misma carpeta:
 
-- `barberly-api`: API con Express, Prisma y MySQL 8, y la documentación del proyecto en `docs/`.
+- `barberly-api`: API con Express, Prisma y PostgreSQL, y la documentación del proyecto en `docs/`.
 - `barberly-movil`: este repositorio.
 - `barberly-panel`: panel web del propietario.
 

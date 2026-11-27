@@ -12,7 +12,7 @@ user-invocable: false
 - `src/componentes/`, `src/textos/` (todos los textos de interfaz y el mapa codigo de error → mensaje), `src/utilidades/` (fechas con Luxon).
 
 ## Reglas
-- La app solo habla con la API; nunca con MySQL, IA o pasarela.
+- La app solo habla con la API; nunca con la base de datos, IA o pasarela.
 - Datos del servidor con TanStack Query (`useQuery` / `useMutation`); invalida las claves afectadas tras cada mutacion.
 - Formularios con React Hook Form + Zod; reutiliza los esquemas de `src/api/contrato.ts` cuando existan (copia del contrato de la API, D-11).
 - Tokens solo en `expo-secure-store`; nunca en `AsyncStorage` ni en logs.
