@@ -1,4 +1,4 @@
-// Entrada según la sesión y el rol (AUT-08, HU-AUT-02, D-10).
+// Entrada según la sesión y la barbería o rol activo (AUT-08, AUT-09, HU-AUT-02, D-10).
 import { Redirect } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -11,11 +11,13 @@ import { mensajeDeError } from '@/textos/errores';
 import { espacios, tipografia, useTema } from '@/tema';
 
 export default function Inicio() {
-  const { estado, perfil, errorPerfil, reintentar, salir } = useSesion();
+  const { estado, activa, errorPerfil, reintentar, salir } = useSesion();
   const { colores } = useTema();
 
   if (estado === 'sin-sesion') return <Redirect href="/bienvenida" />;
-  if (estado === 'con-sesion' && perfil) return <Redirect href={rutaInicial(perfil)} />;
+  if (estado === 'con-sesion' && activa !== undefined) {
+    return <Redirect href={rutaInicial(activa)} />;
+  }
 
   const sinConexion = estado === 'sin-conexion';
   if (!sinConexion && !errorPerfil) return <PantallaCarga />;

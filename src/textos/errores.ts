@@ -11,6 +11,7 @@ const MENSAJES: Record<string, string> = {
   NO_ENCONTRADO: 'No encontramos lo que buscabas.',
   CORREO_REGISTRADO: 'Ya existe una cuenta con ese correo. Inicia sesión.',
   CREDENCIALES_INVALIDAS: 'Correo o contraseña incorrectos.',
+  CODIGO_INVALIDO: 'El código no es válido o ya venció. Revísalo o pide otro.',
   DEMASIADAS_SOLICITUDES: 'Demasiados intentos. Espera unos minutos e intenta de nuevo.',
   HORARIO_OCUPADO: 'Ese horario ya fue tomado. Elige otro.',
   INTERNO: 'Algo salió mal de nuestro lado. Intenta de nuevo.',

@@ -7,5 +7,11 @@ import { textos } from '@/textos';
 export default function Hoy() {
   const { perfil } = useSesion();
   if (!perfil) return <PantallaCarga />;
-  return <PantallaInicio perfil={perfil} textosInicio={textos.inicioBarbero} />;
+  return (
+    <PantallaInicio
+      perfil={perfil}
+      textosInicio={textos.inicioBarbero}
+      rutaPerfil="/(barbero)/perfil"
+    />
+  );
 }

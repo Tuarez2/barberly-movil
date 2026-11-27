@@ -22,10 +22,12 @@ interface TextosInicio {
 interface PropiedadesPantallaInicio {
   perfil: PerfilUsuario;
   textosInicio: TextosInicio;
+  // `perfil` existe en (cliente) y en (barbero): se enlaza con su grupo (docs/pantallas.md).
+  rutaPerfil: '/(cliente)/perfil' | '/(barbero)/perfil';
 }
 
 // Inicio de cada rol mientras llegan Explorar (etapa 2) y la Agenda (etapa 4).
-export function PantallaInicio({ perfil, textosInicio }: PropiedadesPantallaInicio) {
+export function PantallaInicio({ perfil, textosInicio, rutaPerfil }: PropiedadesPantallaInicio) {
   const router = useRouter();
   const { colores } = useTema();
   const margenes = useSafeAreaInsets();
@@ -76,7 +78,7 @@ export function PantallaInicio({ perfil, textosInicio }: PropiedadesPantallaInic
         <Boton
           etiqueta={textosInicio.perfil}
           tipo="secundario"
-          alPresionar={() => router.push('/perfil')}
+          alPresionar={() => router.push(rutaPerfil)}
         />
       </Entrada>
     </ScrollView>

@@ -13,6 +13,7 @@ const mockEntrar = jest.fn();
 
 jest.mock('expo-router', () => ({
   useRouter: () => ({ replace: mockReemplazar, back: jest.fn(), push: jest.fn() }),
+  useLocalSearchParams: () => ({}),
 }));
 jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: () => ({ top: 0, right: 0, bottom: 0, left: 0 }),
