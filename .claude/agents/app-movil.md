@@ -28,4 +28,4 @@ Las rutas permitidas las impone un hook.
 - Todo el repositorio, incluidos `**/*.prueba.tsx`, `README.md` y `src/api/contrato.ts` (si te lo indican)
 
 ## No toques
-- `.claude/`, `.github/` y `../barberly-api/` (la API y su `docs/` se cambian en ese repositorio)
+- `.claude/`, `.github/` y `../api/` (la API y su `docs/` se cambian en ese repositorio)

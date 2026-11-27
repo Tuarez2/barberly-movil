@@ -3,6 +3,8 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Boton } from '@/componentes/boton';
+import { CorteDiagonal } from '@/componentes/corte-diagonal';
+import { Entrada } from '@/componentes/entrada';
 import { LogoBarberly } from '@/componentes/logo-barberly';
 import { textos } from '@/textos';
 import { espacios, tipografia, useTema } from '@/tema';
@@ -28,27 +30,38 @@ export default function Bienvenida() {
         style={estilos.foto}
       />
       <View style={estilos.contenido}>
-        <LogoBarberly />
-        <Text
-          accessibilityRole="header"
-          style={[tipografia.tituloGrande, { color: colores.colorTinta }]}
-        >
-          {textos.bienvenida.lema}
-        </Text>
-        <Text style={[tipografia.cuerpo, { color: colores.colorTextoSecundario }]}>
-          {textos.bienvenida.descripcion}
-        </Text>
+        <Entrada indice={0}>
+          <LogoBarberly />
+        </Entrada>
+        <CorteDiagonal ancho={96} retraso={160} />
+        <Entrada indice={2}>
+          <Text
+            accessibilityRole="header"
+            style={[tipografia.tituloGrande, { color: colores.colorTinta }]}
+          >
+            {textos.bienvenida.lema}
+          </Text>
+        </Entrada>
+        <Entrada indice={3}>
+          <Text style={[tipografia.cuerpo, { color: colores.colorTextoSecundario }]}>
+            {textos.bienvenida.descripcion}
+          </Text>
+        </Entrada>
       </View>
       <View style={[estilos.acciones, { paddingBottom: espacios.espacio5 + margenes.bottom }]}>
-        <Boton
-          etiqueta={textos.bienvenida.crearCuenta}
-          alPresionar={() => router.push('/registro')}
-        />
-        <Boton
-          etiqueta={textos.bienvenida.iniciarSesion}
-          tipo="secundario"
-          alPresionar={() => router.push('/iniciar-sesion')}
-        />
+        <Entrada indice={4}>
+          <Boton
+            etiqueta={textos.bienvenida.crearCuenta}
+            alPresionar={() => router.push('/registro')}
+          />
+        </Entrada>
+        <Entrada indice={5}>
+          <Boton
+            etiqueta={textos.bienvenida.iniciarSesion}
+            tipo="secundario"
+            alPresionar={() => router.push('/iniciar-sesion')}
+          />
+        </Entrada>
       </View>
     </ScrollView>
   );

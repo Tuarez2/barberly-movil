@@ -2,10 +2,11 @@ import { useColorScheme } from 'react-native';
 
 import { colores, type ColoresTema } from './colores';
 import { espacios } from './espacios';
+import { movimiento } from './movimiento';
 import { radios } from './radios';
 import { tipografia } from './tipografia';
 
-export { colores, espacios, radios, tipografia };
+export { colores, espacios, movimiento, radios, tipografia };
 export { fuentes } from './tipografia';
 
 export interface Tema {

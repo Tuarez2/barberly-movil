@@ -4,10 +4,10 @@
 import path from 'node:path';
 import { bloquear, dividir, esEnvProtegido, leerEvento, rutaRelativa, sinEnvoltorios } from './comun.mjs';
 
-const SOLO_LECTURA_PARA_CLAUDE = new Set(['../barberly-api/docs/DERCAS.md', '.claude/settings.json']);
+const SOLO_LECTURA_PARA_CLAUDE = new Set(['../api/docs/DERCAS.md', '.claude/settings.json']);
 const HERRAMIENTAS_DE_EDICION = new Set(['Edit', 'Write', 'MultiEdit']);
 const SHELLS = new Set(['bash', 'sh', 'zsh', 'dash']);
-const CLIENTES_SQL = new Set(['mysql', 'mariadb']);
+const CLIENTES_SQL = new Set(['psql', 'pg_dump', 'pg_restore', 'dropdb', 'mysql', 'mariadb']);
 const DROP_BASE = /\bdrop\s+(database|schema)\b/i;
 // El caracter previo evita process.env y similares.
 const MENCION_ENV = /(?:^|[^\w.-])(\.env[\w.-]*)/g;

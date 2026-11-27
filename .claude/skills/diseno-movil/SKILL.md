@@ -7,12 +7,12 @@ user-invocable: false
 # Diseño movil
 
 ## Fuente de verdad
-- `../barberly-api/docs/identidad-visual.md`: tokens, tipografia y marca.
-- `../barberly-api/docs/pantallas.md`: pantalla → nodo de Figma, ruta y endpoints.
+- `../api/docs/identidad-visual.md`: tokens, tipografia y marca.
+- `../api/docs/pantallas.md`: pantalla → nodo de Figma, ruta y endpoints.
 
 ## Antes de construir una pantalla
-1. Busca su nodo en `../barberly-api/docs/pantallas.md` (fileKey en ese archivo).
-2. Abre la sesión con `create_session` y el fileKey de `../barberly-api/docs/pantallas.md`. Luego carga la skill `/figma-design-to-code` con `Skill` (plugin de Figma); si no está instalada, lee el recurso MCP `skill://figma/figma-design-to-code/SKILL.md` con `ReadMcpResourceTool` (servidor `claude.ai Figma`). En segundo plano esa herramienta no existe: lee la misma URI con `get_figma_skill`.
+1. Busca su nodo en `../api/docs/pantallas.md` (fileKey en ese archivo).
+2. Abre la sesión con `create_session` y el fileKey de `../api/docs/pantallas.md`. Luego carga la skill `/figma-design-to-code` con `Skill` (plugin de Figma); si no está instalada, lee el recurso MCP `skill://figma/figma-design-to-code/SKILL.md` con `ReadMcpResourceTool` (servidor `claude.ai Figma`). En segundo plano esa herramienta no existe: lee la misma URI con `get_figma_skill`.
 3. Consulta el nodo con `get_design_context` y `get_screenshot`; usa `get_metadata` para ver la estructura de un marco y `get_variable_defs` si dudas de un token.
 4. El codigo de referencia de Figma se adapta a los componentes y tokens del proyecto; nunca se copia tal cual.
 
@@ -37,7 +37,14 @@ user-invocable: false
 - Graficos con `react-native-gifted-charts`.
 
 ## Componentes
-En `src/componentes/`, con los mismos nombres que el marco "Componentes" de Figma (`Boton`, `CampoTexto`, `Chip`, `FilaBarberia`, `FilaCita`, etc.). La lista esta en `../barberly-api/docs/pantallas.md`.
+En `src/componentes/`, con los mismos nombres que el marco "Componentes" de Figma (`Boton`, `CampoTexto`, `Chip`, `FilaBarberia`, `FilaCita`, etc.). La lista esta en `../api/docs/pantallas.md`.
 
 ## Marca
-"El corte" va en maximo 3 lugares (`../barberly-api/docs/identidad-visual.md` §6).
+"El corte" va en maximo 3 lugares (`../api/docs/identidad-visual.md` §6).
+
+## Movimiento (D-26)
+- Tokens en `src/tema/movimiento.ts`; reglas en `../api/docs/identidad-visual.md` §6.1.
+- Animaciones con Reanimated (`entering` de layout y `useSharedValue` con `.set()`/`.get()`); siempre con `useReducedMotion()`.
+- Respuesta háptica con `src/utilidades/haptica.ts` (toque al presionar, éxito al confirmar, error al fallar).
+- Componentes base: `Boton`, `CampoTexto`, `Aviso`, `CorteDiagonal`, `Entrada`, `PantallaFormulario`, `PantallaCarga`.
+
