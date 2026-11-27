@@ -25,6 +25,35 @@ export const textos = {
     conCuenta: '¿Ya tienes cuenta? Iniciar sesión',
   },
   volver: 'Volver',
+  carga: 'Preparando tu agenda',
+  sinConexion: {
+    titulo: 'Sin conexión',
+    mensaje: 'No pudimos conectarnos con Barberly. Revisa tu internet.',
+    reintentar: 'Reintentar',
+  },
+  avisoPanel:
+    'Eres propietario: administra tu barbería, tu equipo y tus estadísticas desde el panel web de Barberly.',
+  inicioCliente: {
+    saludo: (nombre: string) => `Hola, ${nombre}`,
+    subtitulo: '¿Listo para tu próximo corte?',
+    pronto:
+      'Muy pronto: explora barberías cerca de ti, mira sus horarios libres y reserva en segundos.',
+    perfil: 'Mi perfil',
+  },
+  inicioBarbero: {
+    saludo: (nombre: string) => `Hola, ${nombre}`,
+    subtitulo: 'Así viene tu día.',
+    pronto: 'Muy pronto: tu agenda del día y de la semana, en tiempo real.',
+    perfil: 'Mi perfil',
+  },
+  perfil: {
+    titulo: 'Mi perfil',
+    correo: 'Correo',
+    telefono: 'Teléfono',
+    barberias: 'Tus barberías',
+    rol: { PROPIETARIO: 'Propietario', BARBERO: 'Barbero' },
+    cerrarSesion: 'Cerrar sesión',
+  },
   proximamente: 'Esta pantalla llega en la siguiente fase.',
   marca: 'Barberly',
 } as const;

@@ -1,6 +1,6 @@
 ## Funcionalidad
 
-<!-- ID de ../barberly-api/docs/hoja-de-ruta.md (ej. F1.C) y qué entrega. -->
+<!-- ID de ../api/docs/hoja-de-ruta.md (ej. F1.C) y qué entrega. -->
 
 ## Tareas y códigos
 
@@ -20,7 +20,7 @@
 - [ ] Nombres propios en español (AGENTS.md).
 - [ ] Una prueba por cada criterio de aceptación y, si aplica, la de "otra barbería → 404".
 - [ ] `revisor-seguridad` sin Bloqueantes.
-- [ ] Endpoints, campos y errores existen en el DERCAS o en `../barberly-api/docs/decisiones.md`.
+- [ ] Endpoints, campos y errores existen en el DERCAS o en `../api/docs/decisiones.md`.
 - [ ] Probada en el teléfono contra sus criterios de aceptación, si toca la app.
 - [ ] Sin pantallas de propietario: van en `barberly-panel` (D-10).
-- [ ] Todas sus tareas están `hecha` en `../barberly-api/docs/hoja-de-ruta.md`.
+- [ ] Todas sus tareas están `hecha` en `../api/docs/hoja-de-ruta.md`.
